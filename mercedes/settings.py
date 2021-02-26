@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'core',
     'custom_auth',
+    'wish_list',
 ]
 
 REST_FRAMEWORK = {
@@ -52,8 +53,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
-        # 'rest_framework.permissions.IsAuthenticated', 
+        # 'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ),
     # 'DATETIME_FORMAT': "%d/%m/%Y %H:%M",
     # 'DATETIME_INPUT_FORMATS': ['%d/%m/%Y %H:%M'],
