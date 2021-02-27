@@ -9,7 +9,7 @@ from parser.drom import Drom
 # Create your views here.
 
 def home(request):
-    return HttpResponse('')
+    return render(request, 'home_page.html')
 
 
 
