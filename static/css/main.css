@@ -4,19 +4,22 @@ body, html {
     height: 100%;
 }
 
-.loader {
+.loader, .loader2 {
     position: absolute;
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.loader {
     background: black;
 }
 
 .loader img {
-    width: 1400px;
-    height: 1400px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     animation: spin .85s infinite linear;
 }
@@ -28,15 +31,6 @@ body, html {
     to {
         transform: rotate(360deg);
     }
-}
-
-.loader2 {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .loader2 img {
