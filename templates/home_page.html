@@ -2,7 +2,15 @@
 {% load static %}
 
 {% block content %}
+    <audio src="{% static 'sound/batman.mp3' %}" id="batman_sound" loop></audio>
     <div class="loader">
         <img src="https://sun9-48.userapi.com/impf/c841130/v841130763/2a364/v9TRlDj81r4.jpg?size=207x434&quality=96&sign=0b97c5740d8cfe7cbcb795801f7f3173&type=album">
     </div>
+    <div class="loader2">
+        <img src="https://main-cdn.goods.ru/hlr-system/1510895621/600000195812b0.png">
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script src="{% static 'js/sound.js' %}"></script>
 {% endblock %}
