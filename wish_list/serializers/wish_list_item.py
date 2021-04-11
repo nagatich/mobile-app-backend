@@ -1,7 +1,5 @@
-from rest_framework import serializers
-
 from mercedes.serializers import DynamicFieldsModelSerializer
-from .models import WishListItem
+from wish_list.models import WishListItem
 
 class WishListItemSerializer(DynamicFieldsModelSerializer):
     class Meta:

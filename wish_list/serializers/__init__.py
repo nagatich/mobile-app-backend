@@ -1,0 +1,1 @@
+from .wish_list_item import WishListItemSerializer

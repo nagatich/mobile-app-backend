@@ -4,7 +4,7 @@ import json
 from bs4 import BeautifulSoup
 
 def bytes_to_json(bytes_data):
-    json_data = bytes_data.decode('utf8').replace("'", '"')
+    json_data = bytes_data.decode('utf8').replace("'\'", "")
     return json.loads(json_data)
 
 def only_numbers(string):
@@ -54,9 +54,10 @@ class Drom:
         return data
 
     @staticmethod
-    def get_query_html(model, generation, query, engine_fuel = None, engine_volume = None, city = 15291):
+    def get_query_html(brand, model, generation, query, engine_fuel = None, engine_volume = None, city = 15291):
         """
-            model (str): mercedes-benz c-class.
+            brand (str): mercedes-benz.
+            model (str):  c-class.
             generation (int): 2.
             query (str): магнитола.
             engine_fuel (str): gasoline.
@@ -72,7 +73,7 @@ class Drom:
             'autoPartsGeneration': generation,
             'autoPartsVolume': engine_volume,
             'city': city,
-            'model': model,
+            'model': f'{brand} {model}',
             'query': query,
         }
         query = requests.get(f'https://baza.drom.ru/sell_spare_parts/', params=payload)

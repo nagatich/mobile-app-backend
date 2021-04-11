@@ -47,10 +47,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'celery',
+    # 'channels',
 
     'core',
     'custom_auth',
     'wish_list',
+    'user_profile',
 ]
 
 REST_FRAMEWORK = {
@@ -58,9 +61,12 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        # 'rest_framework.permissions.AllowAny',
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
+        # 'rest_framework.permissions.IsAuthenticated',
     ),
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 100
+    'DATETIME_FORMAT': "%s",
     # 'DATETIME_FORMAT': "%d/%m/%Y %H:%M",
     # 'DATETIME_INPUT_FORMATS': ['%d/%m/%Y %H:%M'],
 }
@@ -144,6 +150,8 @@ LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'Europe/Moscow'
 
+CELERY_TIMEZONE = TIME_ZONE
+
 USE_I18N = True
 
 USE_L10N = True
@@ -169,9 +177,6 @@ CORS_ALLOW_HEADERS = (
     'x-csrftoken',
 )
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 STATIC_URL = '/static/'
 STATIC_ROOT = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
@@ -179,5 +184,25 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
+
+# Channels
+# ASGI_APPLICATION = "specsharing.routing.application"
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {"hosts": [("redis", 6379)]},
+#     }
+# }
+
+# celery
+CELERY_IMPORTS = [
+    "core.tasks",
+]
+
+BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 django_heroku.settings(locals())
