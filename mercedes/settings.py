@@ -48,12 +48,13 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'celery',
-    # 'channels',
+    'channels',
 
     'core',
     'custom_auth',
     'wish_list',
     'user_profile',
+    'notifications',
 ]
 
 REST_FRAMEWORK = {
@@ -100,8 +101,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mercedes.wsgi.application'
-
+ASGI_APPLICATION = "mercedes.asgi.application"
+# WSGI_APPLICATION = 'mercedes.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -185,16 +186,15 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
-# Channels
-# ASGI_APPLICATION = "specsharing.routing.application"
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels_redis.core.RedisChannelLayer",
-#         "CONFIG": {"hosts": [("redis", 6379)]},
-#     }
-# }
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('localhost', 6379)],
+        },
+    },
+}
 
-# celery
 CELERY_IMPORTS = [
     "core.tasks",
 ]
