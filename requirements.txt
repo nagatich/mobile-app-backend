@@ -3,6 +3,7 @@ amqp==2.6.1
 asgiref==3.3.1
 async-timeout==3.0.1
 attrs==20.3.0
+autobahn==21.3.1
 Automat==20.2.0
 beautifulsoup4==4.9.3
 billiard==3.6.4.0
@@ -22,7 +23,6 @@ daphne==3.0.1
 dj-database-url==0.5.0
 Django==3.1.7
 django-cors-headers==3.7.0
-django-heroku==0.3.1
 django-redis==4.12.1
 djangorestframework==3.12.2
 docopt==0.6.2
@@ -35,7 +35,6 @@ incremental==21.3.0
 kombu==4.6.11
 msgpack==1.0.2
 prompt-toolkit==3.0.18
-psycopg2==2.7.7
 psycopg2-binary==2.8.6
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
