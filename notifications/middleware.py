@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 from django.http import parse_cookie
 
 from rest_framework.authtoken.models import Token
@@ -9,7 +9,7 @@ from channels.db import database_sync_to_async
 def get_user(token):
     try:
         return Token.objects.get(key=token).user
-    except User.DoesNotExist:
+    except Token.DoesNotExist:
         return AnonymousUser()
 
 class AuthMiddleware:
@@ -23,7 +23,7 @@ class AuthMiddleware:
                     cookies = parse_cookie(value.decode("latin1"))
                     scope['user'] = await get_user(cookies.get('token'))
                     break
-        elif 'token' in scope['query_string']:
+        if scope['user'].is_anonymous and b'token' in scope['query_string']:
             token = scope['query_string'].decode("utf-8").replace('token=', '')
             scope['user'] = await get_user(token)
 
