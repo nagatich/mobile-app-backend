@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,12 +25,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '$p_f)ni8xt5&3@amm4e47!-t3*)%okxzp9&fgqh^ma*^3lyn%m'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG') == 'True'
-
-ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -99,29 +93,8 @@ TEMPLATES = [
     },
 ]
 
+WSGI_APPLICATION = 'mercedes.wsgi.application'
 ASGI_APPLICATION = "mercedes.asgi.application"
-# WSGI_APPLICATION = 'mercedes.wsgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-if not DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.getenv('DB_NAME'),
-            'USER': os.getenv('DB_USER'),
-            'PASSWORD': os.getenv('DB_PASSWORD'),
-            'HOST': os.getenv('DB_HOST'),
-            'PORT': os.getenv('DB_PORT', '5432'),
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -177,7 +150,6 @@ CORS_ALLOW_HEADERS = (
 )
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',

@@ -9,19 +9,25 @@ https://docs.djangoproject.com/en/3.1/howto/deployment/asgi/
 
 import os
 
-from channels.auth import AuthMiddlewareStack
-from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mercedes.settings")
+django_asgi_app = get_asgi_application()
+
+from django.urls import path
+
+from channels.routing import ProtocolTypeRouter, URLRouter
+
+from notifications.consumers import NotificationConsumer
 from notifications.middleware import AuthMiddleware
 
-from .routing import websocket_urlpatterns
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mercedes.settings")
+websocket_urlpatterns = [
+    path('notifications/', NotificationConsumer.as_asgi()),
+]
 
 application = ProtocolTypeRouter({
-  "http": get_asgi_application(),
-  "websocket": AuthMiddleware(
+    "http": django_asgi_app,
+    "websocket": AuthMiddleware(
         URLRouter(
             websocket_urlpatterns,
         )
