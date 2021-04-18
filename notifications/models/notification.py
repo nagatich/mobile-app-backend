@@ -2,9 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Notification(models.Model):
-    text = models.CharField(max_length=512, verbose_name='Текст уведомления')
+    message = models.CharField(max_length=512, verbose_name='Текст уведомления')
     to_user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Для пользователя')
     seen = models.BooleanField(default=False, verbose_name='Прочитано')
+    event = models.CharField(max_length=200, verbose_name='Событие', default='notification')
     
     class Meta:
         verbose_name = 'Уведомление'

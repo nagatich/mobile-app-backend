@@ -13,6 +13,6 @@ class UpdateAPIView(APIView):
 
     def get(self, request):
         if self.update_function:
-            self.update_function.delay()
+            self.update_function.delay(user_id=request.user.id)
             return Response({ 'message': 'update started' }, status=HTTP_200_OK)
         return Response(status=HTTP_400_BAD_REQUEST)
