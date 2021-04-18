@@ -6,20 +6,22 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
 from mercedes.celery import app
-
 from parser.drom import Drom
-
 from core.models import (
     Brand,
     Model,
     Generation,
 )
-
 from notifications.models import Notification
+from notifications.events import (
+    UPDATE_DB_ERROR,
+    UPDATE_DB_SUCCESS
+)
 
 @app.task
 def update_generations(user_id):
-    user = User.objects.get(id=user_id)
+    if user_id:
+        user = User.objects.get(id=user_id)
     try:
         brands = Brand.objects.all()
         for brand in brands:
@@ -35,15 +37,17 @@ def update_generations(user_id):
                         number=generation.get('number'),
                         production_period=json.dumps(generation.get('productionPeriod'))
                     )
-        Notification.objects.create(
-            to_user=user,
-            message='Обновление поколений завершено!',
-            event='update_success',
-        )
+        if user_id:
+            Notification.objects.create(
+                to_user=user,
+                message='Обновление поколений завершено!',
+                event=UPDATE_DB_SUCCESS,
+            )
     except Exception as e:
         print(e)
-        Notification.objects.create(
-            to_user=user,
-            message='При обновлении поколений что-то пошло не так!',
-            event='update_error',
-        )
+        if user_id:
+            Notification.objects.create(
+                to_user=user,
+                message='При обновлении поколений что-то пошло не так!',
+                event=UPDATE_DB_ERROR,
+            )

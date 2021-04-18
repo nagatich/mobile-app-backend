@@ -6,17 +6,18 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
 from mercedes.celery import app
-
 from parser.drom import Drom
-
 from core.models import (
     Brand,
     Model,
     Generation,
     Modification,
 )
-
 from notifications.models import Notification
+from notifications.events import (
+    UPDATE_DB_ERROR,
+    UPDATE_DB_SUCCESS
+)
 
 @app.task
 def update_modifications(user_id):
@@ -38,15 +39,17 @@ def update_modifications(user_id):
                             volume=modification.get('volume'),
                             power_range=json.dumps(modification.get('powerRange'))
                         )
-        Notification.objects.create(
-            to_user=user,
-            message='Обновление модификаций завершено!',
-            event='update_success',
-        )
+        if user_id:
+            Notification.objects.create(
+                to_user=user,
+                message='Обновление модификаций завершено!',
+                event=UPDATE_DB_SUCCESS,
+            )
     except Exception as e:
         print(e)
-        Notification.objects.create(
-            to_user=user,
-            message='При обновлении модификаций что-то пошло не так!',
-            event='update_error',
-        )
+        if user_id:
+            Notification.objects.create(
+                to_user=user,
+                message='При обновлении модификаций что-то пошло не так!',
+                event=UPDATE_DB_ERROR,
+            )

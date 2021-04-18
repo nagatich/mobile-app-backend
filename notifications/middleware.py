@@ -18,13 +18,13 @@ class AuthMiddleware:
 
     async def __call__(self, scope, receive, send):
         if 'headers' in scope:
-            for name, value in scope.get("headers", []):
-                if name == b"cookie":
-                    cookies = parse_cookie(value.decode("latin1"))
+            for name, value in scope.get('headers', []):
+                if name == b'cookie':
+                    cookies = parse_cookie(value.decode('latin1'))
                     scope['user'] = await get_user(cookies.get('token'))
                     break
         if scope['user'].is_anonymous and b'token' in scope['query_string']:
-            token = scope['query_string'].decode("utf-8").replace('token=', '')
+            token = scope['query_string'].decode('utf-8').replace('token=', '')
             scope['user'] = await get_user(token)
 
         return await self.app(scope, receive, send)

@@ -6,6 +6,7 @@ from asgiref.sync import async_to_sync, sync_to_async
 
 from ..models import Notification
 from ..serializers import NotificationSerializer
+from ..events import NOTIFICATIONS
 
 class NotificationConsumer(AsyncJsonWebsocketConsumer):
     room = None
@@ -16,7 +17,7 @@ class NotificationConsumer(AsyncJsonWebsocketConsumer):
             if self.user.is_anonymous:
                 await self.close()
 
-            room = f"{self.user.username}_room_notifications"
+            room = f'{self.user.username}_room_notifications'
             self.room = room
             if self.room:
                 await self.accept()
@@ -35,9 +36,9 @@ class NotificationConsumer(AsyncJsonWebsocketConsumer):
         await self.channel_layer.group_send(
             self.room,
             {
-                "type": "notificate",
-                "event": "notifications",
-                "message": json.loads(text_data)
+                'type': 'notificate',
+                'event': NOTIFICATIONS,
+                'message': json.loads(text_data)
             }
         )
 
@@ -46,9 +47,9 @@ class NotificationConsumer(AsyncJsonWebsocketConsumer):
         await self.channel_layer.group_send(
             self.room,
             {
-                "type": "notificate",
-                "event": "notifications",
-                "message": notifications,
+                'type': 'notificate',
+                'event': NOTIFICATIONS,
+                'message': notifications,
             }
         )
 

@@ -1,5 +1,5 @@
 from .home import home
-from .update import UpdateAPIView
+from .update import UpdateDBAPIView
 
 # lists
 from .brand_list import BrandListAPIView

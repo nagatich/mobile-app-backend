@@ -6,13 +6,11 @@ from rest_framework.status import (
 )
 
 from mercedes.permissions import IsSuperUser
+from core.tasks import update_db
 
-class UpdateAPIView(APIView):
+class UpdateDBAPIView(APIView):
     permission_classes=[IsSuperUser]
-    update_function = None
 
     def get(self, request):
-        if self.update_function:
-            self.update_function.delay(user_id=request.user.id)
-            return Response({ 'message': 'update started' }, status=HTTP_200_OK)
-        return Response(status=HTTP_400_BAD_REQUEST)
+        update_db.delay(user_id=request.user.id)
+        return Response({ 'message': 'update started' }, status=HTTP_200_OK)
