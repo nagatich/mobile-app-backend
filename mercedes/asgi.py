@@ -22,7 +22,7 @@ from notifications.consumers import NotificationConsumer
 from notifications.middleware import AuthMiddleware
 
 websocket_urlpatterns = [
-    path('notifications/', NotificationConsumer.as_asgi()),
+    path('ws/notifications/', NotificationConsumer.as_asgi()),
 ]
 
 application = ProtocolTypeRouter({
