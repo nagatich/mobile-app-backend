@@ -1,11 +1,10 @@
 import os
 
+import json
+
 DEBUG = False
 
-ALLOWED_HOSTS = [
-    "ravchon.ru",
-    "78.24.217.205"
-]
+ALLOWED_HOSTS = json.loads(os.getenv('ALLOWED_HOSTS'))
 
 DATABASES = {
     'default': {
