@@ -21,7 +21,8 @@ from notifications.events import (
 
 @app.task
 def update_modifications(user_id):
-    user = User.objects.get(id=user_id)
+    if user_id:
+        user = User.objects.get(id=user_id)
     try:
         brands = Brand.objects.all()
         for brand in brands:
