@@ -5,3 +5,5 @@ staticfiles/
 .DS_Store
 
 .Todo
+db.sqlite3
+dump.rdb
