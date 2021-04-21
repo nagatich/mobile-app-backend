@@ -15,6 +15,7 @@ class Car(models.Model):
     generation = models.ForeignKey(Generation, on_delete=models.CASCADE, blank=True, null=True)
     modification = models.ForeignKey(Modification, on_delete=models.CASCADE, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    last_searched = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.brand.name} \

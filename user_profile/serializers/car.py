@@ -12,4 +12,6 @@ class CarSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         car, created = self.Meta.model.objects.get_or_create(**validated_data)
+        if not created:
+            car.save()
         return car
