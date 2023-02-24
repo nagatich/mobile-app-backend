@@ -6,14 +6,14 @@ from rest_framework.status import (
 )
 
 from wish_list.models import WishListItem
-from wish_list.serializers import WishListItemSerializer
+from wish_list.serializers import CreateWishListItemSerializer
 
 class WishListAPIView(mixins.CreateModelMixin, generics.ListAPIView):
     model = WishListItem
-    serializer_class = WishListItemSerializer
+    serializer_class = CreateWishListItemSerializer
 
     def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user)
+        return self.model.objects.filter(user=self.request.user).order_by('-created')
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)

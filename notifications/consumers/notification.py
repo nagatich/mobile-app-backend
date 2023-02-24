@@ -2,6 +2,7 @@ import json
 
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.db import database_sync_to_async
+
 from asgiref.sync import async_to_sync, sync_to_async
 
 from ..models import Notification
@@ -17,8 +18,7 @@ class NotificationConsumer(AsyncJsonWebsocketConsumer):
             if self.user.is_anonymous:
                 await self.close()
 
-            room = f'{self.user.username}_room_notifications'
-            self.room = room
+            self.room = f'{self.user.username}_room_notifications'
             if self.room:
                 await self.accept()
                 await self.channel_layer.group_add(self.room, self.channel_name)
